@@ -1,44 +1,34 @@
 import { assign, fromPromise, setup } from "xstate";
 
-const fetchCategories = fromPromise(async () => {
-  const data = await fetch("../data.json");
-  return await data.json();
-});
-
-const loadCategories = assign({
-  categories: ({ event }) => event.output,
-});
-
-export const categoriesMachine = setup({
-  actors: {
-    fetchCategories,
+const data = [
+  {
+    name: "electronics",
+    image_src:
+      "https://upload.wikimedia.org/wikipedia/commons/4/42/Mobile_electronic_gadgets_%28Unsplash%29.jpg",
+    id: 1,
   },
-  actions: {
-    loadCategories,
+  {
+    name: "jewelery",
+    image_src:
+      "https://upload.wikimedia.org/wikipedia/commons/0/0a/Jewelry_ring_necklaces.jpg",
+    id: 2,
   },
-}).createMachine({
+  {
+    name: "men's clothing",
+    image_src:
+      "https://upload.wikimedia.org/wikipedia/commons/4/47/20181109_KUBENZ_clothing_shop_in_the_Manufaktura%2C_Lodz._November_2018_003.jpg",
+    id: 3,
+  },
+  {
+    name: "women's clothing",
+    image_src:
+      "https://upload.wikimedia.org/wikipedia/commons/f/f3/Women%27s_clothes_store_%28Unsplash%29.jpg",
+    id: 4,
+  },
+];
+
+export const categoriesMachine = setup({}).createMachine({
   context: {
-    categories: undefined,
-  },
-  initial: "loadData",
-  states: {
-    loadData: {
-      invoke: {
-        src: "fetchCategories",
-        onDone: {
-          actions: "loadCategories",
-        },
-        onError: {
-          target: "retry",
-        },
-      },
-    },
-    retry: {
-      after: {
-        2000: {
-          target: "loadData",
-        },
-      },
-    },
+    data,
   },
 });

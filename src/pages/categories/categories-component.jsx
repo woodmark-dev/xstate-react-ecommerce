@@ -4,7 +4,7 @@ import { rootContext } from "../../RootContext";
 
 const Categories = () => {
   const machineRef = rootContext.useActorRef().system.get("categories");
-  const data = useSelector(machineRef, ({ context }) => context.categories);
+  const { data } = useSelector(machineRef, ({ context }) => context);
 
   if (!data) {
     return <p>Loading...</p>;
