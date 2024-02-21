@@ -11,14 +11,16 @@ const Card = ({ product }) => {
       <figure>
         <img src={image} alt={title} className="w-full" />
       </figure>
-      <div className="card-body">
+      <div className="card-body p-0">
         <div className="flex justify-end">
           <AddToFavBtn product={product} />
         </div>
         <h2 className="card-title text-inherit">
           {truncate(capitalize(title))}
         </h2>
-        {price && <p>${price}</p>}
+        <div>
+          <p>${price}</p>
+        </div>
         <div className="card-actions">
           <AddToCartBtn product={product} />
         </div>
